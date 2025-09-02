@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="images/gamefrenzy.jpg"/>
+    <title>About Us - GameFrenzy</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1, h2, h3 {
+            color: #ffbf00;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+        }
+
+        .container {
+            max-width: 1200px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .hero-section {
+            background: linear-gradient(to right, #a83279, #d38312);
+            width: 100%;
+            padding: 60px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-section h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .hero-section p {
+            font-size: 1.2em;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        /* About Section */
+        .about-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            background-color: #2b2b2b;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            margin-bottom: 30px;
+        }
+
+        .about-section h2 {
+            margin-bottom: 20px;
+        }
+
+        .about-section p {
+            max-width: 900px;
+            line-height: 1.8;
+        }
+
+        /* Mission and Vision Section */
+        .mission-vision {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            width: 100%;
+            margin-top: 30px;
+        }
+
+        .mission, .vision {
+            flex: 1;
+            padding: 20px;
+            margin: 10px;
+            background-color: #333;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Team Section */
+        .team-section {
+            margin-top: 40px;
+            padding: 20px;
+        }
+
+        .team-section h2 {
+            margin-bottom: 20px;
+        }
+
+        .team-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .team-member {
+            margin: 10px;
+            padding: 20px;
+            background-color: #333;
+            border-radius: 10px;
+            text-align: center;
+            width: 250px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .team-member img {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            margin-bottom: 10px;
+            transition: transform 0.3s;
+        }
+
+        .team-member:hover img {
+            transform: scale(1.1);
+        }
+
+        .team-member h3 {
+            margin-top: 10px;
+        }
+
+        /* Footer Section */
+        .footer {
+            width: 100%;
+            padding: 20px;
+            background-color: #1a1a1a;
+            text-align: center;
+            font-size: 0.9em;
+            border-top: 1px solid #444;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero-section">
+        <h1>About GameFrenzy</h1>
+        <p><b>Your ultimate destination for immersive gaming experiences. Dive into a world of excitement, adventure, and endless possibilities with GameFrenzy.</b></p>
+    </div>
+
+    <div class="container">
+        <!-- About Section -->
+        <div class="about-section">
+            <h2>Our Journey</h2>
+            <p>
+                GameFrenzy was founded with a passion for gaming and a mission to bring people together through immersive gameplay. 
+                Our team of developers, designers, and gamers work tirelessly to create a platform that not only entertains 
+                but also connects players from around the world. Every game you play on GameFrenzy reflects our dedication 
+                to quality, excitement, and innovation.
+            </p>
+        </div>
+
+        <!-- Mission and Vision Section -->
+        <div class="mission-vision">
+            <div class="mission">
+                <h3>Our Mission</h3>
+                <p>To create a vibrant gaming community where people can experience thrilling gameplay, 
+                   challenge themselves, and connect with fellow gamers globally.</p>
+            </div>
+            <div class="vision">
+                <h3>Our Vision</h3>
+                <p>To become the leading platform for gaming enthusiasts, offering diverse genres, exclusive content, 
+                   and unforgettable experiences for gamers of all ages.</p>
+            </div>
+        </div>
+
+        <!-- Team Section -->
+        <div class="team-section">
+            <h2>Meet Our Team</h2>
+            <div class="team-container">
+                <div class="team-member">
+                    <img src="images/Harshit(2).webp" alt="Team Member">
+                    <h3>Harshit</h3>
+                    <p>Head of Game Development</p>
+                </div>
+                <div class="team-member">
+                    <img src="images/Vinay.jpg" alt="Team Member">
+                    <h3>Vinay</h3>
+                    <p>Lead Designer</p>
+                </div>
+                <div class="team-member">
+                    <img src="images/Roshanpreet.jpg" alt="Team Member">
+                    <h3>Roshanpreet Singh</h3>
+                    <p>Community Manager</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <div class="footer">
+        &copy; 2024 GameFrenzy. All Rights Reserved. | <a href="#" style="color: #ffbf00;">Privacy Policy</a>
+    </div>
+
+</body>
+</html>

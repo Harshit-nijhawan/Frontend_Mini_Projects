@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="images/gamefrenzy.jpg" />
+    <title>GameFrenzy</title>
+    <style>
+        body {
+            opacity: 0;
+            animation: fadeIn 1.5s ease-in-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        nav ul li a {
+            transition: transform 0.3s, background-color 0.3s, color 0.3s;
+        }
+
+        nav ul li a:hover {
+            transform: scale(1.1);
+            background-color: #50c8c6;
+            color: #fff;
+        }
+
+        .dropdown-content {
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .profile:hover .dropdown-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .game-card {
+            perspective: 1000px;
+        }
+
+        .game-card:hover .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-inner {
+            position: relative;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            width: 100%;
+            backface-visibility: hidden;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+        }
+
+        .about-section,
+        .team-section,
+        .contact-us {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .about-section.show,
+        .team-section.show,
+        .contact-us.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .profile-icon {
+            transition: transform 0.3s;
+        }
+
+        .profile-icon:hover {
+            transform: translateY(-5px);
+        }
+
+        .bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+            z-index: -1;
+            /* Sends it behind other content */
+            pointer-events: none;
+            /* Prevents the video from interacting with hover events */
+        }
+
+
+        /* Main content styling */
+        .content {
+            position: relative;
+            color: white;
+            text-align: center;
+            z-index: 1;
+            /* Keeps it above the video */
+            padding: 20px;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url("images/background_video.mp4") no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(0, 0, 0, 0.7);
+            /* Slight transparency for better readability */
+            color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo img {
+            width: 70px;
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .logo img:hover {
+            transform: rotate(360deg);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-left: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        nav ul li a:hover {
+            background-color: #74ebd5;
+            color: #333;
+        }
+
+        /* Search bar styles */
+        .search-bar {
+            flex-grow: 1;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 25px;
+            border: none;
+            outline: none;
+            transition: width 0.4s ease;
+            font-size: 16px;
+        }
+
+        main {
+            padding: 40px 20px;
+        }
+
+        .featured-games {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .game-card {
+            width: calc(50% - 10px);
+            max-width: 350px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            /* White background with slight transparency */
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            transition: transform 0.3s ease, box-shadow 0.3s;
+            overflow: hidden;
+            /* Ensure content doesn't overflow */
+        }
+
+        .game-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-card video {
+            width: 100%;
+            max-height: 450px;
+            object-fit: cover;
+            border-radius: 12px;
+            transition: transform 0.4s ease, filter 0.3s ease;
+            pointer-events: auto;
+            /* Prevent hover effects from affecting the video */
+        }
+
+        .game-card video:hover {
+            transform: translateY(-10px) scale(1.05);
+            filter: brightness(1.1);
+            /* Optional: makes video appear slightly brighter */
+        }
+
+
+
+        .game-card h3 {
+            margin-top: 10px;
+            font-size: 1.5em;
+            transition: color 0.3s;
+            color: black;
+        }
+
+        .game-card h3:hover {
+            color: blue;
+        }
+
+        footer {
+            margin-top: 150px;
+            text-align: center;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            /* Slight transparency for footer */
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .game-card {
+                width: 100%;
+            }
+
+            .featured-games {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: white;
+        }
+
+        .about-section {
+            width: 99%;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            /* Remove max-width and margin */
+            margin: 0;
+            /* Removes left and right auto margins */
+            margin-top: 200px;
+        }
+
+
+        .about-section h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .about-section p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            /* Remove max-width and center alignment */
+            text-align: justify;
+            /* For balanced edges */
+            margin: 0;
+            /* Removes extra spacing */
+        }
+
+
+        .team-member {
+            display: inline-block;
+            width: 30%;
+            text-align: center;
+            margin: 10px;
+            padding: 15px;
+            background: black;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .team-member img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+
+        .more-info {
+            display: none;
+            margin-top: 10px;
+            background: black;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            position: absolute;
+            width: 90%;
+            left: 5%;
+            top: 110%;
+        }
+
+        .members {
+            text-align: center;
+            margin-top: 80px;
+            font-style: italic;
+            font-size: xx-large;
+        }
+
+        .profile {
+            position: relative;
+            display: inline-block;
+        }
+
+        .profile-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: box-shadow 0.3s;
+        }
+
+        .profile-icon:hover {
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #333;
+            min-width: 150px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #575757;
+        }
+
+        .profile:hover .dropdown-content {
+            display: block;
+        }
+
+        .contact-us {
+            text-align: center;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            margin-top: 30px;
+        }
+
+        .contact-us h2 {
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            color: #74ebd5;
+        }
+
+        .contact-info a {
+            margin: 0 15px;
+            display: inline-block;
+        }
+
+        .contact-info img {
+            width: 40px;
+            height: 40px;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-info img:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+
+<body>
+    <video class="bg-video" autoplay muted loop>
+        <source src="images/background.mp4" type="video/mp4">
+        <!-- Add more formats for compatibility -->
+        Your browser does not support HTML5 video.
+    </video>
+    <header>
+        <div class="logo">
+            <img src="images/gamefrenzy.jpg" alt="GameFrenzy Logo">
+        </div>
+        <nav>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search games...">
+            </div>
+            <ul>
+                <li><a href="aboutus.html">About Us</a></li>
+                <li><a href="RateUs.html">Rate Us</a></li>
+                <!-- <li><a href="login.html">Log In</a></li> -->
+            </ul>
+            <!-- Profile Dropdown -->
+            <div class="profile">
+                <img src="images/Harshit.jpg" alt="Profile" class="profile-icon">
+                <div class="dropdown-content">
+                    <a href="profile.html">View Profile</a>
+                    <a href="setting.html">Settings</a>
+                    <a href="login.html">Log Out</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="featured-games" id="gamesList">
+            <div class="game-card">
+                <a href="Quiz.html">
+                    <video muted>
+                        <source src="images/quiz.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </a>
+                <h3>Quiz Game</h3>
+            </div>
+
+            <div class="game-card">
+                <a href="tictactoe.html">
+                    <video muted>
+                        <source src="images/Tic Tac Toe.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </a>
+                <h3>Tic Tac Toe</h3>
+            </div>
+
+            <div class="game-card">
+                <a href="snake.html">
+                    <video muted>
+                        <source src="images/snake.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </a>
+                <h3>Snake Game</h3>
+            </div>
+            <p id="noGamesMessage" style="display: none; text-align: center; font-size: 1.5em; color: white;">No games
+                found!</p>
+        </section>
+    </main>
+    <section class="about-section" id="aboutSection">
+        <h2>Who We Are</h2>
+        <p>At GameFrenzy, we are passionate about gaming and dedicated to providing the best gaming experience to our
+            users. Our team comprises experienced developers, designers, and gamers who work tirelessly to bring you the
+            latest and greatest in gaming.</p>
+    </section>
+
+    <section class="team-section">
+        <h2 class="members">Meet Our Team</h2>
+        <div class="team-member" id="member1">
+            <img src="images/Harshit.jpg" alt="Member 1">
+            <h3>Harshit</h3>
+            <p>Lead Developer</p>
+            <button onclick="toggleInfo('member1-info')">More Info</button>
+            <div class="more-info" id="member1-info">
+                <p>Harshit has over 1 years of experience in game development. he loves creating immersive worlds and
+                    engaging gameplay.</p>
+            </div>
+        </div>
+
+        <div class="team-member" id="member2">
+            <img src="images/Roshanpreet.jpg" alt="Member 2">
+            <h3>Vinay Sharma</h3>
+            <p>Graphic Designer</p>
+            <button onclick="toggleInfo('member2-info')">More Info</button>
+            <div class="more-info" id="member2-info">
+                <p>Vinay Sharma is a creative graphic designer who specializes in character design and game UI/UX.</p>
+            </div>
+        </div>
+
+        <div class="team-member" id="member3">
+            <img src="images/Vinay.jpg" alt="Member 3">
+            <h3>RoshanPreet Singh</h3>
+            <p>Community Manager</p>
+            <button onclick="toggleInfo('member3-info')">More Info</button>
+            <div class="more-info" id="member3-info">
+                <p>RoshanPreet Singh engages with our community, ensuring player feedback is heard and acted upon.</p>
+            </div>
+        </div>
+    </section>
+    <section class="contact-us">
+        <h2>Contact Us</h2>
+        <div class="contact-info">
+            <a href="mailto:your-email@example.com" title="Email">
+                <img src="images/email.jpg" alt="Email Icon">
+            </a>
+            <a href="https://linkedin.com/in/your-profile" target="_blank" title="LinkedIn">
+                <img src="images/linkdin.jpg" alt="LinkedIn Icon">
+            </a>
+            <a href="tel:+1234567890" title="Phone Number">
+                <img src="images/phone.png" alt="Phone Icon">
+            </a>
+            <a href="https://instagram.com/your-profile" target="_blank" title="Instagram">
+                <img src="images/instagram.webp" alt="Instagram Icon">
+            </a>
+            <a href="https://facebook.com/your-profile" target="_blank" title="Facebook">
+                <img src="images/facebook.jpg" alt="Facebook Icon">
+            </a>
+            <a href="https://twitter.com/your-profile" target="_blank" title="Twitter">
+                <img src="images/twitter.jpg" alt="Twitter Icon">
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 GameFrenzy. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('searchInput').addEventListener('keyup', function () {
+            let filter = this.value.toUpperCase();
+            let gamesList = document.getElementById('gamesList');
+            let gameCards = gamesList.getElementsByClassName('game-card');
+            let noGamesMessage = document.getElementById('noGamesMessage');
+            let gamesFound = false;
+
+            for (let i = 0; i < gameCards.length; i++) {
+                let gameTitle = gameCards[i].getElementsByTagName('h3')[0];
+                if (gameTitle.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    gameCards[i].style.display = "";
+                    gamesFound = true;
+                } else {
+                    gameCards[i].style.display = "none";
+                }
+            }
+
+            // Show or hide the "No games found" message based on the results
+            if (gamesFound) {
+                noGamesMessage.style.display = "none";
+            } else {
+                noGamesMessage.style.display = "block";
+            }
+        });
+
+
+        // Hover to play/pause video without controls
+        const videos = document.querySelectorAll('video');
+        videos.forEach(video => {
+            video.addEventListener('mouseenter', () => {
+                video.play();
+            });
+
+            video.addEventListener('mouseleave', () => {
+                video.pause();
+            });
+        });
+        function toggleInfo(infoId) {
+            const infoDiv = document.getElementById(infoId);
+            if (infoDiv.style.display === "none" || infoDiv.style.display === "") {
+                infoDiv.style.display = "block";
+            } else {
+                infoDiv.style.display = "none";
+            }
+        }
+
+        // Hide all additional info on page load
+        document.addEventListener("DOMContentLoaded", () => {
+            const infos = document.querySelectorAll(".more-info");
+            infos.forEach(info => info.style.display = "none");
+        });
+        document.addEventListener("scroll", () => {
+            document.querySelectorAll('.about-section, .team-section, .contact-us').forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                if (sectionTop < window.innerHeight - 100) {
+                    section.classList.add("show");
+                }
+            });
+        });
+
+    </script>
+
+    <!-- Your existing main content and footer -->
+
+</body>
+
+</html>

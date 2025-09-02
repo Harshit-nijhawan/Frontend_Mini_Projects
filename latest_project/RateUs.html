@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="images/gamefrenzy.jpg" />
+    <title>Rate Us - GameFrenzy</title>
+    <style>
+        /* Fullscreen background and animations */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: url("images/background2-img.jpg");
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            animation: backgroundPulse 6s infinite alternate;
+        }
+
+        @keyframes backgroundPulse {
+            0% {
+                background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            }
+
+            100% {
+                background: linear-gradient(135deg, #0f3460, #16213e, #1a1a2e);
+            }
+        }
+
+        /* Container styling */
+        .rating-container {
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            border-radius: 12px;
+            background: rgba(43, 43, 43, 0.9);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6);
+            animation: fadeIn 1s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Fading effect */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Header text */
+        h2 {
+            font-size: 2em;
+            color: #ffbf00;
+            margin: 0 0 10px;
+            animation: textShadowPulse 2s infinite alternate;
+        }
+
+        @keyframes textShadowPulse {
+            0% {
+                text-shadow: 2px 2px 6px rgba(255, 191, 0, 0.5);
+            }
+
+            100% {
+                text-shadow: 4px 4px 10px rgba(255, 191, 0, 1);
+            }
+        }
+
+        /* Star animations */
+        .stars {
+            display: flex;
+            justify-content: center;
+            margin: 15px 0;
+        }
+
+        .star {
+            font-size: 2.5em;
+            color: #555;
+            cursor: pointer;
+            transition: color 0.3s, transform 0.3s;
+            margin: 0 5px;
+        }
+
+        .star.selected,
+        .star:hover,
+        .star:hover~.star {
+            color: #ffbf00;
+            transform: scale(1.2);
+        }
+
+        /* Input and Text area styling */
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #555;
+            border-radius: 8px;
+            font-size: 1em;
+            outline: none;
+        }
+
+        /* Button animations */
+        button {
+            padding: 12px 25px;
+            background-color: #ffbf00;
+            color: #1e1e1e;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            animation: pulse 1s infinite alternate;
+        }
+
+        button:hover {
+            background-color: #ff9f00;
+            transform: scale(1.05);
+        }
+
+        #responseMessage {
+            margin-top: 15px;
+            color: #ffbf00;
+            font-size: 1em;
+            font-weight: 500;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="rating-container">
+        <h2>🎮 Rate Your Experience on GameFrenzy! 🎮</h2>
+        <p>We'd love to hear your feedback!</p>
+
+        <!-- User name input -->
+        <input type="text" id="userName" placeholder="Enter your name" />
+
+        <!-- Star rating -->
+        <div class="stars" id="starRating">
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+        </div>
+
+        <!-- Feedback text area -->
+        <textarea id="feedback" rows="4" placeholder="Tell us what you enjoyed or how we can improve!"></textarea>
+
+        <!-- Submit button -->
+        <button onclick="submitFeedback()">Submit</button>
+
+        <!-- Response message -->
+        <p id="responseMessage"></p>
+    </div>
+
+    <script>
+        const stars = document.querySelectorAll('.star');
+        let rating = 0;
+
+        stars.forEach((star, index) => {
+            star.addEventListener('click', () => {
+                rating = index + 1;
+                updateStarRating();
+            });
+        });
+
+        function updateStarRating() {
+            stars.forEach((star, index) => {
+                star.classList.toggle('selected', index < rating);
+            });
+        }
+
+        function submitFeedback() {
+            const userName = document.getElementById('userName').value;
+            const feedback = document.getElementById('feedback').value;
+            const responseMessage = document.getElementById('responseMessage');
+
+            if (!userName) {
+                responseMessage.textContent = "Please enter your name.";
+            } else if (rating === 0) {
+                responseMessage.textContent = "Please select a rating before submitting.";
+            } else {
+                // Create a feedback object
+                const feedbackData = {
+                    userName: userName,
+                    rating: rating,
+                    feedback: feedback,
+                    date: new Date().toLocaleString()  // Add timestamp
+                };
+
+                // Retrieve existing feedback from local storage, or create an empty array if none
+                const feedbackList = JSON.parse(localStorage.getItem('gameFrenzyFeedback')) || [];
+
+                // Add the new feedback to the feedback list
+                feedbackList.push(feedbackData);
+
+                // Save the updated feedback list to local storage
+                localStorage.setItem('gameFrenzyFeedback', JSON.stringify(feedbackList));
+
+                // Show a confirmation message
+                responseMessage.textContent = `Thank you, ${userName}! You gave us ${rating} star(s). Your feedback has been saved.`;
+
+                // Clear input fields after submission
+                document.getElementById('userName').value = '';
+                document.getElementById('feedback').value = '';
+                rating = 0;
+                updateStarRating();
+            }
+        }
+    </script>
+
+
+</body>
+
+</html>

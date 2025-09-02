@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="images/gamefrenzy.jpg"/>
+    <title>Settings - GameFrenzy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url(images/background2-img.jpg);
+            color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #1c1c1c;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #74ebd5;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section h3 {
+            margin: 0 0 10px;
+            color: #74ebd5;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            background-color: #2a2a2a;
+            color: #f0f0f0;
+        }
+
+        .button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #74ebd5;
+            color: #333;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #66d7c1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Settings</h2>
+        
+        <div class="section">
+            <h3>Account Settings</h3>
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Enter new username">
+            
+            <label for="email">Email</label>
+            <input type="text" id="email" placeholder="Enter new email">
+        </div>
+        
+        <div class="section">
+            <h3>Privacy</h3>
+            <label for="visibility">Profile Visibility</label>
+            <select id="visibility">
+                <option>Public</option>
+                <option>Private</option>
+            </select>
+        </div>
+        
+        <div class="section">
+            <h3>Notifications</h3>
+            <label>
+                <input type="checkbox" id="emailNotifications"> Email Notifications
+            </label>
+            <label>
+                <input type="checkbox" id="gameUpdates"> Game Updates
+            </label>
+        </div>
+        
+        <button class="button" onclick="saveSettings()">Save Changes</button>
+    </div>
+
+    <script>
+        // Function to load saved settings from localStorage
+        function loadSettings() {
+            // Get saved data from localStorage
+            document.getElementById("username").value = localStorage.getItem("Username") || "";
+            document.getElementById("email").value = localStorage.getItem("userEmail") || "";
+            document.getElementById("visibility").value = localStorage.getItem("visibility") || "Public";
+            document.getElementById("emailNotifications").checked = localStorage.getItem("emailNotifications") === "true";
+            document.getElementById("gameUpdates").checked = localStorage.getItem("gameUpdates") === "true";
+        }
+
+        // Function to save settings to localStorage
+        function saveSettings() {
+            const username = document.getElementById("username").value;
+            const email = document.getElementById("email").value;
+            const visibility = document.getElementById("visibility").value;
+            const emailNotifications = document.getElementById("emailNotifications").checked;
+            const gameUpdates = document.getElementById("gameUpdates").checked;
+
+            // Save to localStorage
+            localStorage.setItem("ChangedUsername", username);  // Corrected from "Username" to match the signup key
+            localStorage.setItem("ChnagedUserEmail", email);
+            localStorage.setItem("visibility", visibility);
+            localStorage.setItem("emailNotifications", emailNotifications);
+            localStorage.setItem("gameUpdates", gameUpdates);
+
+            alert("Settings saved successfully!");
+        }
+
+        // Load settings on page load
+        window.onload = loadSettings;
+    </script>
+</body>
+</html>

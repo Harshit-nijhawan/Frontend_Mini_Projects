@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - GameFrenzy</title>
+    <style>
+        /* Base styling */
+        body {
+            font-family: Arial, sans-serif;
+            background: url(images/background2-img.jpg);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Profile container */
+        .profile-container {
+            background: rgba(20, 20, 20, 0.95);
+            padding: 40px;
+            border-radius: 12px;
+            width: 80%;
+            max-width: 600px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .profile-container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Header styling */
+        .profile-container h2 {
+            font-size: 2.2em;
+            color: #74ebd5;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Profile details styling */
+        .profile-detail {
+            font-size: 1.2em;
+            margin: 15px 0;
+            color: #ccc;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .profile-detail strong {
+            color: #74ebd5;
+            font-size: 1.1em;
+        }
+
+        /* Button styling */
+        .profile-container button {
+            margin-top: 20px;
+            padding: 12px 20px;
+            font-size: 1em;
+            color: #fff;
+            background: #74ebd5;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .profile-container button:hover {
+            background: #4ec1b8;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <h2>User Profile</h2>
+        <p class="profile-detail"><strong>Username:</strong> <span id="displayUsername"></span></p>
+        <p class="profile-detail"><strong>Email:</strong> <span id="displayEmail"></span></p>
+        <button onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        // Retrieve data from localStorage
+        const storedUsername = localStorage.getItem("Username"); // Match with localStorage key
+        const storedEmail = localStorage.getItem("userEmail"); // Match with localStorage key
+
+        // Display data on profile page
+        document.getElementById("displayUsername").innerText = storedUsername || "Not logged in";
+        document.getElementById("displayEmail").innerText = storedEmail || "Not logged in";
+
+        // Logout function to clear data
+        function logout() {
+            localStorage.removeItem("Username"); // Remove user-specific data from localStorage
+            localStorage.removeItem("Email"); // Remove email data from localStorage
+            window.location.href = "login.html"; // Redirect to login page
+        }
+    </script>
+</body>
+</html>
